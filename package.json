@@ -1,22 +1,21 @@
 {
-  "name": "cordova-plugin-toastyplugin",
+  "name": "cordova-plugin-cs108plugin",
   "version": "0.0.1",
-  "description": "An Android Cordova plugin that allows users to display simple Toast messages at the bottom of the screen.",
+  "description": "Cordova plugin for read and write rfid or barcode",
   "cordova": {
-    "id": "cordova-plugin-toastyplugin",
+    "id": "cordova-plugin-cs108plugin",
     "platforms": [
       "android"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alewin/ToastyPlugin.git"
+    "url": "git+https://github.com/hamzahalvanaa/CS108Plugin.git"
   },
   "keywords": [
-    "Toast",
-    "Notification",
-    "Message",
-    "Alert",
+    "RFID",
+    "Barcode",
+    "CS108",
     "ecosystem:cordova",
     "cordova-android"
   ],
@@ -26,10 +25,10 @@
       "version": ">=3.0.0"
     }
   ],
-  "author": "Alessio Koci <ko.alessio@gmail.com>",
+  "author": "Hamzah Alvana <hamzahalvana@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alewin/ToastyPlugin/issues"
+    "url": "https://github.com/hamzahalvanaa/CS108Plugin/issues"
   },
-  "homepage": "https://github.com/alewin/ToastyPlugin"
+  "homepage": "https://github.com/hamzahalvanaa/CS108Plugin"
 }

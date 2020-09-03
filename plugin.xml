@@ -1,30 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        id="cordova-plugin-toastyplugin" version="0.0.1">
-    <name>ToastyPlugin</name>
+<plugin
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-cs108plugin"
+    version="0.0.1">
 
-    <description>An Android Cordova plugin that allows users to display simple Toast messages at the bottom of the screen.</description>
+    <name>CS108Plugin</name>
+    <description>Cordova plugin for read and write rfid or barcode</description>
     <license>MIT</license>
+    <keywords>cordova,android,rfid,barcode,cs108</keywords>
 
-    <keywords>cordova,android,toast,message,alert</keywords>
-    <repo>https://github.com/alewin/ToastyPlugin.git</repo>
-    <issue>https://github.com/alewin/ToastyPlugin/issues</issue>
-  
+    <repo>https://github.com/hamzahalvanaa/CS108Plugin.git</repo>
+    <issue>https://github.com/hamzahalvanaa/CS108Plugin/issues</issue>
+
     <engines>
-        <engine name="cordova" version=">=3.0.0"/>
+        <engine name="cordova" version=">=3.0.0" />
     </engines>
-  
-    <js-module src="www/toastyplugin.js" name="toastyPlugin">
-        <clobbers target="window.plugins.toastyPlugin" />
+
+    <js-module src="www/cs108Plugin.js" name="cs108Plugin">
+        <clobbers target="window.plugins.cs108Plugin" />
     </js-module>
+
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="ToastyPlugin">
-                <param name="android-package" value="com.alessiokoci.cordova.plugin.ToastyPlugin"/>
+            <feature name="CS108Plugin">
+                <param name="android-package" value="com.nocola.cordova.plugin.CS108Plugin" />
             </feature>
         </config-file>
 
-        <source-file src="src/android/ToastyPlugin.java" target-dir="src/com/alessiokoci/cordova/plugin" />
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.csl.cs108library4a.Cs108Library4A" android:clearTaskOnLaunch="true" android:configChanges="orientation|keyboardHidden|screenSize" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden" android:exported="false" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-feature android:name="android.hardware.bluetooth_le" />
+            <uses-feature android:name="android.hardware.usb.host" android:required="false" />
+            <uses-permission android:name="android.permission.USB_PERMISSION" />
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        </config-file>
+
+        <framework src="src/android/cs108library4a.gradle" custom="true" type="gradleReference" />
+        <source-file src="src/android/CS108Plugin.java" target-dir="src/com/nocola/cordova/plugin" />
+        <resource-file src="src/android/cs108library4a.aar" target="libs/cs108library4a.aar" />
+
     </platform>
+
 </plugin>
