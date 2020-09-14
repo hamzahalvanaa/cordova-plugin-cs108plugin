@@ -28,3 +28,10 @@ android {
         exclude 'META-INF/LICENSE'
     }
 }
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}

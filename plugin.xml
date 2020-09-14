@@ -45,6 +45,9 @@
 
         <framework src="src/android/cs108library4a.gradle" custom="true" type="gradleReference" />
         <source-file src="src/android/CS108Plugin.java" target-dir="src/com/nocola/cordova/plugin" />
+        <source-file src="src/android/CustomMediaPlayer.java" target-dir="src/com/nocola/cordova/plugin" />
+        <source-file src="src/android/ReaderListAdapter.java" target-dir="src/com/nocola/cordova/plugin" />
+        <source-file src="src/android/SharedObjects.java" target-dir="src/com/nocola/cordova/plugin" />
         <resource-file src="src/android/cs108library4a.aar" target="libs/cs108library4a.aar" />
 
     </platform>
