@@ -1,5 +1,6 @@
-package com.nocola.cordova.plugin;
+package id.nocola.cordova.plugin.cs108.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -9,38 +10,23 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
-import com.csl.cs108library4a.Cs108Library4A;
-import com.csl.cs108library4a.ReaderDevice;
-import com.csl.cs108library4a.R;
-
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
+import com.pertamina.physicalscheckassets.MainActivity;
+import com.pertamina.physicalscheckassets.R;
 
 import java.util.ArrayList;
 
+import id.nocola.cordova.plugin.cs108.ReaderDevice;
+
 public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
     final boolean DEBUG = false;
-    private final Context context;
+    private Activity currentActivity;
     private final int resourceId;
     private final ArrayList<ReaderDevice> readersList;
     private boolean select4detail, select4Rssi, selectDupElim, select4Extra1, select4Extra2;
 
-    private static CordovaPlugin that;
-    public static Context mContext = that.cordova.getActivity();
-    private static CordovaInterface layout;
-    public static TextView mLogView = new TextView(layout.getContext());
-    public static Cs108Library4A mCs108Library4a = new Cs108Library4A(mContext, mLogView);
-
-    public static class Config {
-        public String configPassword, configPower, config0, config1, config2;
-    }
-
-    ;
-    public static Config config = new Config();
-
-    public ReaderListAdapter(Context context, int resourceId, ArrayList<ReaderDevice> readersList, boolean select4detail, boolean select4Rssi) {
-        super(context, resourceId, readersList);
-        this.context = context;
+    public ReaderListAdapter(Activity activity, int resourceId, ArrayList<ReaderDevice> readersList, boolean select4detail, boolean select4Rssi) {
+        super(activity, resourceId, readersList);
+        this.currentActivity = activity;
         this.resourceId = resourceId;
         this.readersList = readersList;
         this.select4detail = select4detail;
@@ -49,9 +35,9 @@ public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
         select4Extra2 = false;
     }
 
-    public ReaderListAdapter(Context context, int resourceId, ArrayList<ReaderDevice> readersList, boolean select4detail, boolean select4Rssi, boolean selectDupElim, boolean select4Extra1, boolean select4Extra2) {
-        super(context, resourceId, readersList);
-        this.context = context;
+    public ReaderListAdapter(Activity activity, int resourceId, ArrayList<ReaderDevice> readersList, boolean select4detail, boolean select4Rssi, boolean selectDupElim, boolean select4Extra1, boolean select4Extra2) {
+        super(activity, resourceId, readersList);
+        this.currentActivity = activity;
         this.resourceId = resourceId;
         this.readersList = readersList;
         this.select4detail = select4detail;
@@ -59,18 +45,18 @@ public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
         this.selectDupElim = selectDupElim;
         this.select4Extra1 = select4Extra1;
         this.select4Extra2 = select4Extra2;
-        mCs108Library4a.appendToLog("select4Extra1 = " + select4Extra1 + ", select4Extra2 = " + select4Extra2);
+        MainActivity.mCs108Library4a.appendToLog("select4Extra1 = " + select4Extra1 + ", select4Extra2 = " + select4Extra2);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ReaderDevice reader = readersList.get(position);
         if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) currentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(resourceId, null);
         }
 
-        CheckedTextView checkedTextView = (CheckedTextView) convertView.findViewById(that.cordova.getActivity().getApplication().getResources().getIdentifier("reader_checkedtextview", "id", that.cordova.getActivity().getApplication().getPackageName()));
+        CheckedTextView checkedTextView = convertView.findViewById(R.id.reader_checkedtextview);
         String text1 = "";
         if (reader.getName() != null) {
             if (reader.getName().length() != 0) {
@@ -90,7 +76,7 @@ public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
             checkedTextView.setChecked(false);
         }
 
-        TextView countTextView = (TextView) convertView.findViewById(that.cordova.getActivity().getApplication().getResources().getIdentifier("reader_count", "id", that.cordova.getActivity().getApplication().getPackageName()));
+        TextView countTextView = convertView.findViewById(R.id.reader_count);
         if (reader.getCount() != 0) {
             countTextView.setText(String.valueOf(reader.getCount()));
         } else {
@@ -98,23 +84,23 @@ public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
         }
 
         if (select4Rssi) {
-            TextView rssiTextView = (TextView) convertView.findViewById(that.cordova.getActivity().getApplication().getResources().getIdentifier("reader_rssi", "id", that.cordova.getActivity().getApplication().getPackageName()));
+            TextView rssiTextView = convertView.findViewById(R.id.reader_rssi);
             rssiTextView.setVisibility(View.VISIBLE);
             double rssiValue = reader.getRssi();
-            if (mCs108Library4a.getRssiDisplaySetting() != 0 && rssiValue > 0)
+            if (MainActivity.mCs108Library4a.getRssiDisplaySetting() != 0 && rssiValue > 0)
                 rssiValue -= 106.98;
             rssiTextView.setText(String.format("%.1f", rssiValue));
         }
 
         if (select4Extra1) {
-            TextView portTextView = (TextView) convertView.findViewById(that.cordova.getActivity().getApplication().getResources().getIdentifier("reader_extra1", "id", that.cordova.getActivity().getApplication().getPackageName()));
+            TextView portTextView = convertView.findViewById(R.id.reader_extra1);
             portTextView.setVisibility(View.VISIBLE);
             int portValue = reader.getPort() + 1;
             portTextView.setText(String.valueOf(portValue));
         }
 
         if (select4Extra2) {
-            TextView portTextView = (TextView) convertView.findViewById(that.cordova.getActivity().getApplication().getResources().getIdentifier("reader_extra2", "id", that.cordova.getActivity().getApplication().getPackageName()));
+            TextView portTextView = convertView.findViewById(R.id.reader_extra2);
             portTextView.setVisibility(View.VISIBLE);
             int codeStatus = reader.getStatus();
             int codeSensor = reader.getCodeSensor();
@@ -129,13 +115,13 @@ public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
                     else strExtra += "Bat NG";
                     if ((portstatus & 4) != 0) strExtra += "\nTemper NG";
                 }
-            } else if (codeSensor > reader.INVALID_CODESENSOR && codeRssi > reader.INVALID_CODERSSI) { //for Axzon/Magnus tags
+            } else if (codeSensor > ReaderDevice.INVALID_CODESENSOR && codeRssi > ReaderDevice.INVALID_CODERSSI) { //for Axzon/Magnus tags
                 strExtra = "SC=" + String.format("%d", codeSensor);
                 int ocrssiMin = -1;
                 int ocrssiMax = -1;
                 boolean bValidOcrssi = false;
-                ocrssiMax = Integer.parseInt(config.config1);
-                ocrssiMin = Integer.parseInt(config.config2);
+                ocrssiMax = Integer.parseInt(MainActivity.config.config1);
+                ocrssiMin = Integer.parseInt(MainActivity.config.config2);
                 if (ocrssiMax > 0 && ocrssiMin > 0 && (codeRssi > ocrssiMax || codeRssi < ocrssiMin))
                     strExtra += ("\n<font color=red>OCRSSI=" + String.format("%d", codeRssi) + "</font>");
                 else {
@@ -147,23 +133,23 @@ public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
                         strExtra += ("\nT=" + String.format("%.1f", codeTempC) + (char) 0x00B0 + "C");
                 }
                 int backport = reader.getBackport1();
-                if (backport > reader.INVALID_BACKPORT)
+                if (backport > ReaderDevice.INVALID_BACKPORT)
                     strExtra += String.format("\nBP1=%d", backport);
                 backport = reader.getBackport2();
-                if (backport > reader.INVALID_BACKPORT)
+                if (backport > ReaderDevice.INVALID_BACKPORT)
                     strExtra += String.format("\nBP2=%d", backport);
             } else if (codeTempC > reader.INVALID_CODETEMPC) { //for Ctesius tags
                 strExtra = ("T=" + String.format("%.1f", codeTempC) + (char) 0x00B0 + "C");
             } else if (reader.getDetails().contains("E2806894")) { //for code8 tags
                 strExtra = ((brand != null) ? ("Brand=" + brand) : "");
-            } else if (reader.getSensorData() < reader.INVALID_SENSORDATA) {
-                strExtra = "SD=" + String.valueOf(reader.getSensorData());
+            } else if (reader.getSensorData() < ReaderDevice.INVALID_SENSORDATA) {
+                strExtra = "SD=" + reader.getSensorData();
             }
             if (strExtra.length() != 0) portTextView.setText(Html.fromHtml(strExtra));
         }
 
-        TextView readerDetailA = (TextView) convertView.findViewById(that.cordova.getActivity().getApplication().getResources().getIdentifier("reader_detailA", "id", that.cordova.getActivity().getApplication().getPackageName()));
-        TextView readerDetailB = (TextView) convertView.findViewById(that.cordova.getActivity().getApplication().getResources().getIdentifier("reader_detailB", "id", that.cordova.getActivity().getApplication().getPackageName()));
+        TextView readerDetailA = convertView.findViewById(R.id.reader_detailA);
+        TextView readerDetailB = convertView.findViewById(R.id.reader_detailB);
         if (reader.isConnected() || checkedTextView.isChecked() || select4detail == false) {
             readerDetailA.setText(reader.getDetails());
             readerDetailB.setText("");
@@ -174,7 +160,7 @@ public class ReaderListAdapter extends ArrayAdapter<ReaderDevice> {
                 int phase = reader.getPhase();
                 String stringDetailB = null;
                 if (channel != 0 || phase != 0) {
-                    double dChannel = mCs108Library4a.getLogicalChannel2PhysicalFreq(reader.getChannel());
+                    double dChannel = MainActivity.mCs108Library4a.getLogicalChannel2PhysicalFreq(reader.getChannel());
                     stringDetailB = "Phase=" + phase + "\n" + dChannel + "MHz";
                 }
                 if (stringDetailB != null) readerDetailB.setText(stringDetailB);

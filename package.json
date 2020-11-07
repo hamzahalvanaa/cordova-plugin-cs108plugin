@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-cs108plugin",
   "version": "0.0.1",
-  "description": "Cordova plugin for read and write rfid or barcode",
+  "description": "Cordova plugin for read and write rfid",
   "cordova": {
     "id": "cordova-plugin-cs108plugin",
     "platforms": [
@@ -18,12 +18,6 @@
     "CS108",
     "ecosystem:cordova",
     "cordova-android"
-  ],
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=3.0.0"
-    }
   ],
   "author": "Hamzah Alvana <hamzahalvana@gmail.com>",
   "license": "MIT",

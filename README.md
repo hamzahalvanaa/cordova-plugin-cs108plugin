@@ -1,6 +1,6 @@
-# CS108 Barcode / RFID Reader Cordova Plugin for Android
+# CS108 RFID Reader Cordova Plugin for Android (In Development)
 
-Use the CS108 Barcode / RFID Reader Cordova Plugin to quickly develop mobile apps for barcode or RFID reading (Android). The development is based on the CS108 Java API.
+Use the CS108 RFID Reader Cordova Plugin to quickly develop mobile apps for RFID reading (Android). The development is based on the CS108 Java API.
 
 ## Pre-requsite
 
@@ -8,44 +8,28 @@ The development environment consists of the following:
 
 - First we need node.js - Download it here. https://nodejs.org/en/download/
 - Make sure to install the latest version of JDK (Java Development Kit)
-- Make sure you have installed latest version of Android Studio SDK.
+- Make sure you have installed latest version of Android Studio SDK
 
-## Installation
+## Basic Installation
 
-1. Install **Ionic CLI** via **npm**.
-
-    ```  
-        npm install -g @ionic-cli
-    ```
-    
-2. Install **Cordova** via **npm**.
-
-    ```  
-        npm install -g cordova
-    ```
-    
-3. Clone or download [this source code](https://github.com/hamzahalvanaa/ionic-example-cs108) first, then navigate into the project path and install **package.json** requirements via **npm**.
-
-    ```  
-        npm install
-    ```
-
-4. Next step is have to install cordova android platform.
+1. Install cordova android platform **Recommended version is 8.x.x**.
 
     ```
-        ionic cordova platform add android
+        cordova platform add android@8
     ```
 
-5. Afterwards, clone or download this plugin and install using below command via local path.
+2. Afterwards, clone or download this plugin and install using below command via local path.
 
     ```
-        ionic cordova plugin add <local-path-to-plugin>/cordova-plugin-cs108plugin
+        cordova plugin add https://github.com/hamzahalvanaa/cordova-plugin-cs108plugin.git
     ```
 
-6. After success adding the plugin, execute the next command to build ionic and running into real device, make sure you have turn on the developer options on your android phone settings and using the same network connection on both PC and phone.
+3. You need to configure plugin to work by replace all of your current project MainActivity.java file with the file on plugin. So it's should be located in {{your-app}}/platforms/android/app/src/main/java/{{path-to-your-mainactivity-based-on-your-app-package-name}}. The plugin MainActivity file is located in https://github.com/hamzahalvanaa/cordova-plugin-cs108plugin/tree/master/src/android/java/MainActivity.java.
+
+4. After success adding the plugin, execute the next command to build running into real device, make sure you have turn on the developer options on your android phone settings and using the same network connection on both PC and phone.
 
     ```
-        ionic cordova run android -lc --device --no-native-run --host=0.0.0.0 --verbose
+        cordova run android
     ```
 
 ## Development Tips
@@ -56,7 +40,7 @@ The development environment consists of the following:
         distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.3-all.zip
     ```
 
-2. To prevent error and grant permissions while running the ionic project, use this commands:
+2. To prevent error and grant permissions while running the project, use this commands:
 
     ```  
         chmod a+x platforms/android/gradlew
@@ -73,49 +57,4 @@ If your cordova-android version > 6.3.0, please change repositories flatDir ``` 
 
 ## Example
 
-**app.home.html**
-
-```html
-   <ion-col>
-     <ion-button expand="block" size="large" color="light" (click)="connect()">
-      <ion-label>Connect</ion-label>
-     </ion-button>
-   </ion-col>
-
-```
-
-**app.home.ts**
-
-```ts
-import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
-
-declare var window: any;
-
-@Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
-})
-export class HomePage {
-
-  constructor(
-    private platform: Platform
-  ) { }
-
-  ngOnInit() {
-    this.platform.ready().then(() => {
-      this.connect();
-    });
-  }
-
-  connect() {
-    window.plugins.cs108Plugin.connect(function (res) {
-      console.log(res);
-    }, function (err) {
-      console.log(err);
-    });
-  }
-}
-
-```
+For the project example, you can refer to this project, https://github.com/hamzahalvanaa/ionic-example-cs108.git.
